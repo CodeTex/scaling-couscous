@@ -1,31 +1,28 @@
-CC = gcc
-CFLAGS = -fopenmp -O2
+CC := GCC
+CFLAGS := -O2 -g -Wall -Wextra -fopenmp
 
-TARGETS = sorting
+BIN_DIR := bin
+SRC_DIR := src
 
-# source files
-SORTING_SRC = sorting.c
-OPENMP_TEST_SRC = openmp_test.c
+.SILENT: sc mp
 
-# executable files
-SORTING_EXEC = sorting
-OPENMP_TEST_EXEC = openmp_test
+sc:
+	echo "Compiling single core scripts..."
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/quicksort $(SRC_DIR)/quicksort.c
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/matrix_mul_sc $(SRC_DIR)/matrix_mul_sc.c
+	echo "Starting execution..."
+	./$(BIN_DIR)/quicksort
+	./$(BIN_DIR)/matrix_mul_sc
 
-all: $(TARGETS)
-
-sorting:
-	$(CC) $(CFLAGS) -o $(SORTING_EXEC) $(SORTING_SRC)
-
-openmp_test:
-	$(CC) $(CFLAGS) -o $(OPENMP_TEST_EXEC) $(OPENMP_TEST_SRC)
-
-run_sorting:
-	./$(SORTING_EXEC)
-
-run_openmp_test:
-	./$(OPENMP_TEST_EXEC)
+mp:
+	echo "Compiling multi-core scripts..."
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/mergesort $(SRC_DIR)/mergesort.c
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/matrix_mul_mp $(SRC_DIR)/matrix_mul_mp.c
+	echo "Starting execution..."
+	./$(BIN_DIR)/mergesort
+	./$(BIN_DIR)/matrix_mul_mp
 
 clean:
-	rm -f $(SORTING_EXEC) $(OPENMP_TEST_EXEC)
+	rm -f $(BIN_DIR)/*
 
-.PHONY: all clean run_sorting run_openmp_test
+.PHONY: sc mp clean

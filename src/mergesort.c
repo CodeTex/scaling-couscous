@@ -13,29 +13,6 @@ void generate_array(int *array, size_t size) {
     }
 }
 
-// Helper function for quicksort
-void quicksort(int *array, int left, int right) {
-    if (left < right) {
-        int pivot = array[right];
-        int partition_index = left;
-
-        for (int i = left; i < right; i++) {
-            if (array[i] < pivot) {
-                int temp = array[i];
-                array[i] = array[partition_index];
-                array[partition_index] = temp;
-                partition_index++;
-            }
-        }
-        int temp = array[partition_index];
-        array[partition_index] = array[right];
-        array[right] = temp;
-
-        quicksort(array, left, partition_index - 1);
-        quicksort(array, partition_index + 1, right);
-    }
-}
-
 // Helper function for merge sort
 void merge(int *array, int left, int mid, int right) {
     int n1 = mid - left + 1;
@@ -88,14 +65,6 @@ void merge_sort(int *array, int left, int right) {
 int main() {
     int *array = (int *)malloc(ARRAY_SIZE * sizeof(int));
 
-    // Single-Core Quicksort Benchmark
-    generate_array(array, ARRAY_SIZE);
-    clock_t start = clock();
-    quicksort(array, 0, ARRAY_SIZE - 1);
-    clock_t end = clock();
-    printf("Single-core quicksort: %.2f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
-
-    // Multi-Core Merge Sort Benchmark
     generate_array(array, ARRAY_SIZE);
     double omp_start = omp_get_wtime();
     merge_sort(array, 0, ARRAY_SIZE - 1);
