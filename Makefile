@@ -10,9 +10,11 @@ sc:
 	echo "Compiling single core scripts..."
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/quicksort $(SRC_DIR)/quicksort.c
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/matrix_mul_sc $(SRC_DIR)/matrix_mul_sc.c
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/fibonacci $(SRC_DIR)/fibonacci.c
 	echo "Starting execution..."
 	./$(BIN_DIR)/quicksort
 	./$(BIN_DIR)/matrix_mul_sc
+	./$(BIN_DIR)/fibonacci
 
 mp:
 	echo "Compiling multi-core scripts..."
